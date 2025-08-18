@@ -23,7 +23,7 @@ import {
 import "./register.css";
 import validate_form from "./Errors/validate_form";
 import ButtonSpinner from "../components/buttonspinner.jsx";
-export const developmentApiEntryPoint  = "http://localhost:8080";
+export const developmentApiEntryPoint  = "https://globals-backend.onrender.com";
 
 export const temp ="http://localhost:8080"
 export const NavBar = ({ open, links, setState }) => {
