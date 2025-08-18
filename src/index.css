@@ -1,0 +1,65 @@
+:root {
+  /* Primary Colors */
+  --primary-green-light: #a3e4d7;
+  --primary-green-dark: #1abc9c;
+  --primary-blue-light: #5dade2;
+  --primary-blue-dark: #1b4f72;
+
+  /* Accent Colors */
+  --accent-orange-light: #f7dc6f;
+  --accent-orange-dark: #d35400;
+  --accent-purple-light: #d7bde2;
+  --accent-purple-dark: #6c3483;
+
+  /* Neutral Colors */
+  --neutral-gray-light: #ecf0f1;
+  --neutral-gray-dark: #2c3e50;
+  --neutral-white: #ffffff;
+  --neutral-black: #121212;
+
+  /* Highlight Colors */
+  --highlight-red-light: #e74c3c;
+  --highlight-red-dark: #c0392b;
+}
+
+body {
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: "Montserrat", sans-serif;
+}
+
+button {
+  background-color: var(--primary-green-light);
+  color: var(--neutral-white);
+}
+
+button:hover {
+  background-color: var(--primary-green-dark);
+}
+.fadeinRight {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 1s ease;
+}
+
+.fadeinLeft {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 1s ease;
+}
+.fadeinUp {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 1s ease;
+}
+.fadeinDown {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: all 1s ease;
+}
+.visible {
+  transform: translateX(0%) translateY(0%);
+  opacity: 1;
+}
