@@ -409,10 +409,10 @@ const Register = () => {
     const fetchCountries = async () => {
       try {
         const raw = await fetch(
-          "https://restcountries.com/v3.1/all?fields=name"
+          "https://countriesnow.space/api/v0.1/countries"
         );
         const jsonData = await raw.json();
-        setCountries(jsonData);
+        setCountries(jsonData.data);
       } catch (err) {
         console.log(err);
       }
@@ -509,8 +509,8 @@ const Register = () => {
             >
               <Select>
                 {countries.map((country) => (
-                  <option style={{ color: "black" }}>
-                    {country.name.common}
+                  <option value={country.country} style={{ color: "black" }}>
+                    {country.country}
                   </option>
                 ))}
               </Select>
