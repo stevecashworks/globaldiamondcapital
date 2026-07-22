@@ -10,7 +10,7 @@ import { HighLight } from "./login";
 import responsive from "../responsive.js";
 
 import start_Upload from "../upload";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useLocation} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import ErrorsModal from "../components/errorsModal";
@@ -208,7 +208,7 @@ const BtnsFlex = styled.div`
 // gov  id card  or drivers-license
 const params= new URLSearchParams(document.location.search)
 const ref= params.get("ref")
-const logVals = (arr, gov_Id, dispatch, navigate, setErrors,setLoading) => {
+const logVals = (arr, gov_Id, dispatch, navigate, setErrors,setLoading ,location) => {
   toast("Please wait while we sign you in");
   console.log("toasting");
   let detailsObj = {};
@@ -244,7 +244,7 @@ const logVals = (arr, gov_Id, dispatch, navigate, setErrors,setLoading) => {
       (data) => {
         setErrors([data]);
         alert("An error occurred")
-        navigate("/register")
+        navigate(`/register${location.search}`)
       },
       "POST",
       
@@ -342,6 +342,8 @@ const Register = () => {
   const isLogged = useSelector(selectIsLogged);
   const userDetails = useSelector(selectUserDetails);
   const [errors, setErrors] = useState([]);
+  const location = useLocation();
+  console.log(location.search)
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const MenuIcon = menuOpen ? AiOutlineClose : RiMenu4Line;
@@ -610,7 +612,7 @@ const Register = () => {
                   disabled={loading}
                   onClick={() => {
                     
-                    logVals(allRefs, id_url, dispatch, navigate, setErrors,setLoading);
+                    logVals(allRefs, id_url, dispatch, navigate, setErrors,setLoading,location);
                   }}
                 >
                   Finish {loading&&<ButtonSpinner/>}
