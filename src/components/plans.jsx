@@ -6,7 +6,7 @@ const plansData = [
   {
     title: "Starter Plan",
     roi: "10% ROI",
-    minDeposit: "20 USD",
+    minDeposit: "50 USD",
     maxDeposit: "999 USD",
     duration: "24 Hours Plan",
     reinvestment: "Reinvestment Supported",

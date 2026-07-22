@@ -171,7 +171,7 @@ const currentBalance= balanceMap[wallet]
     id: "starter",
     title:"Starter Plan",
     roi: 10,
-    min: 20 ,
+    min: 50 ,
     max: 999,
     duration: 24,
     reinvestment: "Reinvestment Supported",
