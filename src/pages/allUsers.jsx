@@ -98,6 +98,33 @@ const AllUsers = () => {
     }
   }
 
+  const suspendUser=async(id, name)=>{
+    try{
+      console.group(id)
+      const proceed= window.confirm(`are you sure you want to suspend the account with the name: ${name}?`) 
+      if(proceed){
+      const response= await  fetch(`${developmentApiEntryPoint}/admin/suspendaccount/${id}`,{
+          method:"post",
+          headers:{
+            "Content-Type":"application/json",
+            token:localStorage.getItem("support_token")
+          }
+        })
+        const data= await response.json()
+        console.log(data)
+        if(data.success){ 
+          alert("Account suspended successfully")
+        }
+        else{
+          alert(data.result)
+        }
+      }
+    }catch(err){
+      console.log(err.message)
+      alert(err.message)
+    }
+    navigate("/")
+  }
 
   const deleteUser=(id,name)=>{
     const canProceed= window.confirm(`Are you sure you want to  permanently delete  ${name} as a user` )
@@ -176,6 +203,7 @@ const AllUsers = () => {
                   <StyledButton variant="outline-primary"  href={`/admin/credituser?id=${user._id}`} ><MdOutlineAttachMoney/> </StyledButton>
                   <StyledButton href={`/admin/sendmessage?id=${user._id}`} variant="outline-info" ><CiMail/></StyledButton>
                   <StyledButton onClick={()=>{deleteUser(user._id,user.name)}} variant="outline-danger" ><CiTrash/>{loading&&<ButtonSpinner/>}</StyledButton>
+                  <StyledButton variant="outline-danger" onClick={()=>{suspendUser(user._id, user.name)}}>Suspend</StyledButton>
 
                   </td>
                 </tr>

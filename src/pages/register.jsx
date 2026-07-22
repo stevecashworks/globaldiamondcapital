@@ -24,6 +24,7 @@ import "./register.css";
 import validate_form from "./Errors/validate_form";
 import ButtonSpinner from "../components/buttonspinner.jsx";
 export const developmentApiEntryPoint  = "https://globals-backend.onrender.com";
+// export const developmentApiEntryPoint  = "http://localhost:8080";
 
 export const temp ="http://localhost:8080"
 export const NavBar = ({ open, links, setState }) => {
@@ -205,6 +206,8 @@ const BtnsFlex = styled.div`
 // Phone number;
 // SSN;
 // gov  id card  or drivers-license
+const params= new URLSearchParams(document.location.search)
+const ref= params.get("ref")
 const logVals = (arr, gov_Id, dispatch, navigate, setErrors,setLoading) => {
   toast("Please wait while we sign you in");
   console.log("toasting");
@@ -224,6 +227,11 @@ const logVals = (arr, gov_Id, dispatch, navigate, setErrors,setLoading) => {
   
   console.log(detailsObj);
   if (errors.length === 0) {
+    const body= {
+        ...detailsObj,name:`${detailsObj.firstName} ${detailsObj.lastName}`
+      }
+      if(ref)
+        body.ref=ref
     fetchData(
       `${developmentApiEntryPoint}/users/register`,
       (data) => {
@@ -240,9 +248,7 @@ const logVals = (arr, gov_Id, dispatch, navigate, setErrors,setLoading) => {
       },
       "POST",
       
-      {
-        ...detailsObj,name:`${detailsObj.firstName} ${detailsObj.lastName}`
-      }
+    body
     );
   }
 };
@@ -351,6 +357,11 @@ const Register = () => {
   const rePasswordRef = useRef(null);
   const [id_url, set_Id_Url] = useState();
   const [loading, setLoading] = useState(false);
+  const params= new URLSearchParams(document.location.search)
+  const ref= params.get("ref");
+  console.log({ref})
+  
+  
   const links = [
     { text: "Home", path: "/home" },
     { text: "Login", path: "/login" },

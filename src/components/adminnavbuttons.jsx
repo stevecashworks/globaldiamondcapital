@@ -18,7 +18,7 @@ const NavButtons = () => {
       Users
     </Button>
     <Button variant="secondary" href="/admin/payments">Payments</Button>
-    <Button variant="secondary" href="/admin/trips">trips</Button>
+    {/* <Button variant="secondary" href="/admin/trips">trips</Button> */}
     <Button variant="secondary" href="/admin/pendingwithdrawals">
       Pending Withdrawals
     </Button>

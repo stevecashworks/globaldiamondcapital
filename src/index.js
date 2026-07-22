@@ -9,12 +9,14 @@ import {persistor} from './state/store';
 
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
 
+    <PersistGate loading={null} persistor={persistor}>
+  <Toaster position="top-center"/>
     <RoutingComponent />
     </PersistGate>
   </Provider>

@@ -29,7 +29,7 @@ const userSlice = createSlice({
 export const { addError, clearErrors, setIsLoading, setUser, setIsVisible } =
   userSlice.actions;
 export const selectError = (state) => state.user2.errors;
-export const selectIsLoading = (state) => state.use2r.isLoading;
+export const selectIsLoading = (state) => state.user2.isLoading;
 export const selectIsVisible = (state) => state.user2.isVisible;
 export const selectUser = (state) => state.user2.userData;
 export default userSlice.reducer;

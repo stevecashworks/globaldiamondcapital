@@ -33,6 +33,9 @@ import PaymentsPage from "./pages/payment";
 import PaymentsControllerPage from "./pages/paymentController";
 import TravelAdminPage from "./pages/tripsController";
 import CreditUser from "./pages/creditUser";
+import ReInvestPage from "./pages/reInvest";
+import VerifyEmail from "./pages/verify";
+import AccountSuspended from "./pages/AccountSuspended";
 
 
 const RoutingComponent = () => {
@@ -40,6 +43,8 @@ const RoutingComponent = () => {
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/verify" element={<VerifyEmail />} />
+        <Route path="/suspended" element={<AccountSuspended />} />
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
@@ -75,6 +80,7 @@ const RoutingComponent = () => {
         <Route path="/covid19benefits" element={<Covid19Benefits />} />
         <Route path="/medicalsupport" element={<MedicalSupport />} />
         <Route path="/cashcontribution" element={<CashContribution />} />
+        <Route path="/reinvest" element={<ReInvestPage/>} />
         <Route
           path="/admin/approvedwithdrawals"
           element={<ApprovedWithdrawals />}

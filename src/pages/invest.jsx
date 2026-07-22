@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {toast} from "react-hot-toast"
 import {
   Navbar,
   Nav,
@@ -8,9 +9,12 @@ import {
   Row,
   Col,
   Card,
+  Form,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { selectIsLogged, selectUserDetails } from "../state/slices/userSlice";
+import { useSelector } from "react-redux";
 import "./styles.css";
 import styled from "styled-components";
 import usdt from "../assets/coin-icons/usdt.svg";
@@ -51,19 +55,46 @@ const Input = styled.input`
   display: block;
   margin: 20px auto;
 `;
+const ResponsiveContainer= styled(Container)`
+width:90vw;
+margin:20px auto;
+`
+const  Label=styled.label`
+  margin-bottom:10px;
+  cursor:pointer;
+`;
 const PlansAndCoins = () => {
   const token=localStorage.getItem("support_token")
   const navigate= useNavigate()
-
+  const  userDetails= useSelector(selectUserDetails)
+  console.log(userDetails)
   const [currentPlan, setCurrentPlan] = useState({});
-  const [currentCoin, setCurrentCoin] = useState("");
   const [fetchedCoins,setFetchedCoins]= useState({})
+  const [wallet, setWallet]= useState("spot_balance");
+  const [amount, setAmount]= useState("")
+  const [currentCoin, setCurrentCoin] = useState( {
+      id: "USDTadd",
+      img: usdt,
+      name: "usdt",
+      address: fetchedCoins.usdt?fetchedCoins.usdt:"loading ...",
+    });
+    useEffect(()=>{
+      setCurrentCoin({...currentCoin,address:fetchedCoins.usdt})
+    },[fetchedCoins])
   const [inputErrors, setInputErrors]= useState([])
   const [loading,setLoading]= useState(false)
   const plansMatch = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   const [explanation, setExplanation] = useState("");
   const [invalidAmount, setInvalidamount] = useState(false);
   const [currentAmount, setCurrentAmount]=useState(0)
+  const [placeHolder, setPlaceHolder]= useState("")
+  
+const balanceMap={
+  earnings:userDetails.totalEarnings,
+  referral_bonus:userDetails.referralBonus,
+  balance:userDetails.balance
+}
+const currentBalance= balanceMap[wallet]
   console.log(fetchedCoins)
   useEffect(()=>{
     if(!token){
@@ -73,6 +104,7 @@ const PlansAndCoins = () => {
         `${developmentApiEntryPoint}/users/getcoins`,
         (data)=>{
           console.log(data)
+
           setFetchedCoins(data.result)
           
         },(message)=>{
@@ -83,20 +115,29 @@ const PlansAndCoins = () => {
     }
   },[])
   const invest=()=>{
-    const errors=[]
+    console.log(currentPlan)
+    const insufficentFunds= amount>currentBalance
+    try{
+      const errors=[]
+      if(insufficentFunds){
+        errors.push("insufficentFunds");
+      }
     if(!currentCoin){
       errors.push('Please select a coin copy the address by clicking the "Copy Wallet ID" button,  make payment to the address and click Invest')
     }
-    if(!currentPlan){
+    if(!currentPlan.min){
       errors.push("Please select a plan  to continue")
+      
 
     }
+    
     if(invalidAmount){
-      errors.push(`Amount Selected is too ${explanation} for the selected plan`)
+      errors.push(explanation==="none"?"Invalid Amount":`Amount Selected is too ${explanation} for the selected plan`)
     }
-    if(!currentAmount){
-      errors.push("Please input an amunt to continue")
-    }
+    // if(!amount){
+    //   errors.push("Please input an amount to continue")
+    // }
+    console.log({errors})
     setInputErrors(errors)
     if(errors.length===0){
       setLoading(true)
@@ -111,11 +152,16 @@ const PlansAndCoins = () => {
           navigate("/invest")
         },
         "POST",
-        {plan:currentPlan.id, coin:currentCoin.name, amount:currentAmount},
+        {plan:currentPlan.id, coin:currentCoin.name, amount,status:"active", wallet},
         token
 
       )
     }
+    }
+    catch(err){
+      console.log(err.message)
+    }
+    
   }
 
   
@@ -128,7 +174,7 @@ const PlansAndCoins = () => {
     min: 20 ,
     max: 999,
     duration: 24,
-    reinvestment: "Reinvestment Not Supported",
+    reinvestment: "Reinvestment Supported",
   },
   {
     id: "premium",
@@ -177,24 +223,24 @@ const PlansAndCoins = () => {
   ]
 
   const coins=[
-    {
-      id: "btcadd",
-      img: btc,
-      name: "bitcoin",
-      address: fetchedCoins.bitcoin?fetchedCoins.bitcoin:"loading ...",
-    },
+    // {
+    //   id: "btcadd",
+    //   img: btc,
+    //   name: "bitcoin",
+    //   address: fetchedCoins.bitcoin?fetchedCoins.bitcoin:"loading ...",
+    // },
     {
       id: "USDTadd",
       img: usdt,
       name: "usdt",
       address: fetchedCoins.usdt?fetchedCoins.usdt:"loading ...",
     },
-    {
-      id: "ethereumadd",
-      img: eth,
-      name: "ethereum",
-      address: fetchedCoins.ethereum?fetchedCoins.ethereum:"loading ...",
-    },
+    // {
+    //   id: "ethereumadd",
+    //   img: eth,
+    //   name: "ethereum",
+    //   address: fetchedCoins.ethereum?fetchedCoins.ethereum:"loading ...",
+    // },
   ]
 
   return (
@@ -212,6 +258,7 @@ const PlansAndCoins = () => {
             <Col
               onClick={() => {
                 setCurrentPlan(plan);
+                setPlaceHolder(`Min:   ${plan.min}  -  Max    ${plan.max}`)
               }}
               key={plan.id}
               md={4}
@@ -247,12 +294,12 @@ const PlansAndCoins = () => {
         </Row>
       </Container>
       {/* Plans End */}
-      <CoinsCon>
+      {/* <CoinsCon>
         {coins.map((coin) => {
           return <CoinImg src={coin} />;
         })}
-      </CoinsCon>
-      {/* Coins Select Start */}
+      </CoinsCon> */}
+      {/* Coins Select Start
       <Container className="text-center my-5">
         <h1>Select Coin</h1>
         <Row className="gy-4 justify-content-center">
@@ -290,7 +337,10 @@ const PlansAndCoins = () => {
           <Button
             variant="primary"
             style={{ width: "200px", margin: "20px auto" }}
-            onClick={() => navigator.clipboard.writeText(currentCoin.address)}
+            onClick={() => {
+              navigator.clipboard.writeText(currentCoin.address);
+              toast.success(" Address Copied Successfully! ")
+            }}
           >
             Copy Wallet ID
           </Button>
@@ -334,7 +384,35 @@ const PlansAndCoins = () => {
             Invest {loading&&<ButtonSpinner/>}
           </Button>
         </InputContainer>
-      </Container>
+      </Container> */}
+      <ResponsiveContainer className="mb-5">
+          <Label htmlFor="deduct_from">Deduct From:</Label>
+        <Form.Select id="deduct_from" onChange={(e)=>{setWallet(e.target.value)}}  className="mb-4">
+          <option value="spot_balance">Spot (Balance:  ${userDetails.balance})</option>
+          <option value="earnings">Earnings (Balance:  ${userDetails.totalEarnings})</option>
+          <option value="referral_bonus">Referral bonus (Balance:  ${userDetails.referralBonus})</option>
+        </Form.Select>
+        <Label>Amount to Trade (available {currentBalance})</Label>
+        <Form.Control placeholder={placeHolder} onChange={(e)=>{
+          setAmount(e.target.value)
+          const inputAmount= e.target.value
+          setInvalidamount(
+                !currentPlan.min ||
+                  inputAmount < currentPlan.min ||
+                  inputAmount > currentPlan.max||
+                  inputAmount>currentBalance
+              );
+              setExplanation(
+                !currentPlan.min
+                  ? "none"
+                  : inputAmount > currentPlan.max
+                  ? "high"
+                  : "low"
+              );
+          }}  type="number"/>
+        {(invalidAmount)&&<p className="text-danger mt-2" style={{fontSize:"13px"}}>Invalid amount</p>}
+        <Button onClick={invest} className="w-80 mt-4" variant="success">Start Trade</Button>
+      </ResponsiveContainer>
       {/* Coins Select End */}
       <Footer />
     </div>

@@ -9,7 +9,7 @@ const plansData = [
     minDeposit: "20 USD",
     maxDeposit: "999 USD",
     duration: "24 Hours Plan",
-    reinvestment: "Reinvestment Not Supported",
+    reinvestment: "Reinvestment Supported",
   },
   {
     title: "Premium Plan",

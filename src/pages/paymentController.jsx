@@ -110,6 +110,7 @@ const PaymentsPage = () => {
     }
 
   };
+  
 
   const handleDelete = (username) => {
     alert(`Deleted payment for ${username}`);

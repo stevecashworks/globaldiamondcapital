@@ -65,6 +65,12 @@ const App = () => {
 
   useEffect(() => {
     if (dataFetched && assetsLoaded) {
+    console.log(userDetails.status)
+      if(userDetails.status=="suspended"){
+        navigate("/suspended")
+        return
+      }
+        
       if(userDetails.status!=="approved"){
         alert("Your account awaits approval")
         navigate("/home")

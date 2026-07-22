@@ -47,7 +47,7 @@ const ForgotPasswordPage = () => {
             {isSuccess ? (
               <div className="text-center">
                 <i className="bi bi-check-circle text-success" style={{ fontSize: '2rem' }}></i>
-                <p className="text-success mt-3">Check your email for password reset instructions.</p>
+                <p className="text-success mt-3">Check your email for password reset instructions emails may sometimes appear in spam folder.</p>
               </div>
             ) : (
               <Form onSubmit={handleSubmit}>

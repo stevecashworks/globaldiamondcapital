@@ -11,6 +11,8 @@
   --accent-purple-light: #d7bde2;
   --accent-purple-dark: #6c3483;
 
+  --gold:rgb(0, 148, 141);
+
   /* Neutral Colors */
   --neutral-gray-light: #ecf0f1;
   --neutral-gray-dark: #2c3e50;
@@ -20,6 +22,7 @@
   /* Highlight Colors */
   --highlight-red-light: #e74c3c;
   --highlight-red-dark: #c0392b;
+  --dark-green:rgb(2, 139, 105);
 }
 
 body {
@@ -29,6 +32,7 @@ body {
   overflow-x: hidden;
   font-family: "Montserrat", sans-serif;
 }
+
 
 button {
   background-color: var(--primary-green-light);

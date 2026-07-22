@@ -15,6 +15,8 @@ import eth from "../assets/coin-icons/ethereum.png";
 import usdt from "../assets/coin-icons/usdt.svg";
 import ButtonSpinner from "../components/buttonspinner";
 import { useSelector } from "react-redux";
+import styled from "styled-components"
+
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -32,6 +34,10 @@ export const coins = [
   { name: "dogecoin", id: "dogecoin", image: doge },
   { name: "usdt", id: "usdt", image: usdt },
 ];
+const Label= styled.label`
+   margin-bottom: 10px;
+
+`
 const App = () => {
   const userDetails=useSelector(selectUserDetails)
   const navigate=useNavigate()
@@ -44,6 +50,15 @@ const App = () => {
   const [amount, setAmount] = useState();
   const [errors, setErrors] = useState([]);
   const [loading,setLoading]= useState(false)
+  const [ wallet, setWallet]= useState("spot_balance")
+
+  const  walletMap= {
+    spot_balance: userDetails.balance,
+    referral_bonus: userDetails.referralBonus,
+    earnings: userDetails.totalEarnings
+  }
+  const  currentWallet= walletMap[wallet]
+  console.log({currentWallet})
   const availableCoinLogo=[]
   availableWallets.forEach(wallet=>{
     coins.forEach(coin=>{
@@ -56,7 +71,7 @@ const App = () => {
   const withdraw = async () => {
     const errArray = [];
     const token= localStorage.getItem("support_token")
-    if (amount > balance) {
+    if (currentWallet < amount) {
       errArray.push("Insufficient funds");
     }
     if (!selectedCoin) {
@@ -76,7 +91,7 @@ const App = () => {
         navigate("/dashboard")
       },
       "POST",
-      {amount, wallet:{coin:selectedCoin,walletId:userDetails.walletIds[selectedCoin]}}
+      {amount,deduct_from:wallet, wallet:{coin:selectedCoin,walletId:userDetails.walletIds[selectedCoin]}}
     ,
     token  
     )
@@ -107,7 +122,7 @@ const App = () => {
               <div className="bg-white border rounded p-4">
                 <div className="text-center">
                   <p className="border rounded text-primary fw-bold py-1 px-3">
-                    Current Balance: <span id="balanceCon"> $ {balance}</span>
+                    Current Balance: <span id="balanceCon"> $ {currentWallet}</span>
                   </p>
                   <p className="border rounded text-primary fw-bold py-1 px-3">
                     Current wallet: <span id="selectedCoin"></span>
@@ -117,6 +132,16 @@ const App = () => {
 
                 <div className="availableWallets text-center">
                   <p className="text-success mb-5 h4">Available wallets</p>
+                  <Label htmlFor="wallet_selector">Select wallet</Label>
+                  <Form.Select
+                  onChange={(e)=>{setWallet(e.target.value)}}
+                  className="mb-4"
+                  id="wallet_selector"
+                  >
+                    <option value="spot_balance">Spot Balance</option>
+                    <option value="earnings">Earnings</option>
+                    <option value="referral_bonus">Referral Bonus</option>
+                  </Form.Select>
                   <div className="coins-con d-flex align-items-center justify-content-center gap-3 flex-wrap">
                     {availableCoinLogo.map((coin) => {
                       return (

@@ -119,9 +119,9 @@ const PaymentsPage = () => {
   }
   // To store user input amount
   const coins = [
-    { id: "btcadd", img: btc, name: "Bitcoin", address:fetchedCoins["bitcoin"]|| "loading..." },
+    // { id: "btcadd", img: btc, name: "Bitcoin", address:fetchedCoins["bitcoin"]|| "loading..." },
     { id: "usdtadd", img: usdt, name: "USDT", address: fetchedCoins["usdt"]||"loading..." },
-    { id: "ethadd", img: eth, name: "Ethereum", address: fetchedCoins["ethereum"]||"loading..." },
+    // { id: "ethadd", img: eth, name: "Ethereum", address: fetchedCoins["ethereum"]||"loading..." },
     // { id: "dogeadd", img: doge, name: "Dogecoin", address: fetchedCoins["doge"]||"loading..." },
   ]
 
@@ -178,9 +178,9 @@ const PaymentsPage = () => {
     if(!enteredAmount){
       inputErrors.push("amount not set")
     }
-    if(!means){
-      inputErrors.push("PLease select a means of payment to proceed")
-    }
+    // if(!means){
+    //   inputErrors.push("PLease select a means of payment to proceed")
+    // }
     if(!selectedCoin&& (means!=="bank")){
       alert(means)
       inputErrors.push("A coin must be selected")
@@ -190,9 +190,9 @@ const PaymentsPage = () => {
     if(min&&(enteredAmount<min)){
       inputErrors.push(`minimum amount for this service is $${min}`)
     }
-    if(!means){
-    inputErrors.push(`select means of payment`)
-    }
+    // if(!means){
+    // inputErrors.push(`select means of payment`)
+    // }
     setErrors(inputErrors)
     if(inputErrors.length===0){
 
@@ -261,9 +261,10 @@ const PaymentsPage = () => {
           </div>
           <Container>
             <h3 className="text-center my-4">Select a means of payment</h3>
+            <p className="text-center">Only pay to using  the ton network, click the usdt logo to continue</p>
         
       <Form className="mx-auto d-flex">
-      {['radio'].map((type) => (
+      {/* {['radio'].map((type) => (
         <div key={`inline-${type}`} className="mb-3">
           <Form.Check
             inline
@@ -291,7 +292,7 @@ const PaymentsPage = () => {
           />
         
         </div>
-      ))}
+      ))} */}
     </Form>
   
 
@@ -312,7 +313,7 @@ const PaymentsPage = () => {
     </Col>
   ))}
 </Row>
-<A  onClick={handleOpenChat} target="_blank" href="https://wa.link/kl8u3f">Can't use crypto? get bank details</A>
+{/* <A  onClick={handleOpenChat} className="text-center" >Deposits should only be made using ton wallet</A> */}
 <ImgInpCon
                     style={{ backgroundColor: "rgb(132,132,132,0.7)" }}
                   >
