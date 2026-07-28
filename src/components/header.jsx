@@ -165,7 +165,7 @@ const navigate=useNavigate()
               }
               {/* WhatsApp Link */}
               <WhatsAppLink
-                href="https://wa.link/eilpok"
+                href="https://wa.link/7sx53u"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Chat with us on WhatsApp"
