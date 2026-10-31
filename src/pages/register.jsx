@@ -23,8 +23,8 @@ import {
 import "./register.css";
 import validate_form from "./Errors/validate_form";
 import ButtonSpinner from "../components/buttonspinner.jsx";
-export const developmentApiEntryPoint  = "https://globals-backend.onrender.com";
-// export const developmentApiEntryPoint  = "http://localhost:8080";
+// export const developmentApiEntryPoint  = "https://globals-backend.onrender.com";
+export const developmentApiEntryPoint  = "http://localhost:8080";
 
 export const temp ="http://localhost:8080"
 export const NavBar = ({ open, links, setState }) => {
@@ -377,6 +377,7 @@ const Register = () => {
     { name: "lastName", refVal: lastNameRef },
     { name: "email", refVal: emailRef },
     { name: "address", refVal: addressRef },
+    { name: "companyAddress", refVal: companyAddressRef },
     { name: "phone", refVal: phoneRef },
     { name: "password", refVal: passwordRef },
     { name: "repeatpassword", refVal: rePasswordRef },

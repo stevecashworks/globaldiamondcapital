@@ -88,17 +88,26 @@ const PendingWithdrawals = () => {
             </thead>
             <tbody>
               {pendingWithdrawals.map(withdrawal=>{
+                const withdrawalName = withdrawal.userId?.name || "Unavailable (account deleted)";
                 return(
-                  <tr>
-                <td>{withdrawal.userId.name}</td>
+                  <tr key={withdrawal._id}>
+                <td>{withdrawalName}</td>
                 <td>{withdrawal.amount}</td>
-                <td>{withdrawal.wallet.walletId}</td>
-                <td>{withdrawal.wallet.coin}</td>
+                <td>{withdrawal.wallet?.walletId || "Unavailable"}</td>
+                <td>{withdrawal.wallet?.coin || "Unavailable"}</td>
                 <td>
-                  <Button variant="outline-danger mx-4">
-                    <BiTrash onClick={()=>{deleteWithdrawal(withdrawal._id, withdrawal.userId.name,withdrawal.amount)}} />
+                  <Button
+                    onClick={()=>{deleteWithdrawal(withdrawal._id, withdrawalName,withdrawal.amount)}}
+                    variant="outline-danger mx-4"
+                  >
+                    <BiTrash />
                   </Button>
-                  <Button onClick={()=>{approveWithdrawal(withdrawal._id, withdrawal.userId.name,withdrawal.amount)}} variant="outline-info">
+                  <Button
+                    onClick={()=>{approveWithdrawal(withdrawal._id, withdrawalName,withdrawal.amount)}}
+                    variant="outline-info"
+                    disabled={!withdrawal.userId}
+                    title={!withdrawal.userId ? "Cannot approve a withdrawal without an associated user account" : undefined}
+                  >
                     <BsCheck />
                   </Button>
                 </td>

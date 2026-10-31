@@ -117,16 +117,22 @@ const PendingDeposits = () => {
             </thead>
             <tbody>
               {pendingInvestments.map((invest, index)=>{
-                 return <tr>
+                 const investorName = invest.userId?.name || "Unavailable (account deleted)";
+                 return <tr key={invest._id}>
                   <td>{index+1}</td>
-                  <td>{invest.userId.name}</td>
+                  <td>{investorName}</td>
                   <td> ${invest.amount}</td>
                   <td >{invest.coin}</td>
                   <td>
-                    <Button onClick={()=>{deleteInvestment(invest._id,invest.userId.name, invest.amount)}} variant="outline-danger mx-4">
+                    <Button onClick={()=>{deleteInvestment(invest._id,investorName, invest.amount)}} variant="outline-danger mx-4">
                       <BiTrash />
                     </Button>
-                    <Button onClick={()=>{approveInvestment(invest._id,invest.userId.name, invest.amount)}} variant="outline-info">
+                    <Button
+                      onClick={()=>{approveInvestment(invest._id,investorName, invest.amount)}}
+                      variant="outline-info"
+                      disabled={!invest.userId}
+                      title={!invest.userId ? "Cannot approve a deposit without an associated user account" : undefined}
+                    >
                       <BsCheck />
                     </Button>
                   </td>

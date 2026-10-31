@@ -64,7 +64,7 @@ const ReInvestPage = () => {
     title:"Starter Plan",
     roi: 10,
     min: 20 ,
-    max: 999,
+    max: 499,
     duration: 24,
     reinvestment: "Reinvestment Supported",
   },
