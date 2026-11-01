@@ -69,8 +69,17 @@ const ReInvestPage = () => {
     reinvestment: "Reinvestment Supported",
   },
   {
+    id: "standard",
+    title:"Standard Plan",
+    roi: 25,
+    min: 500,
+    max: 999,
+    duration: 48,
+    reinvestment: "Reinvestment Supported",
+  },
+  {
     id: "premium",
-    title:"Premium plan",
+    title:"Premium Plan",
     roi: 25,
     min: 1000,
     max: 9999,
@@ -87,12 +96,12 @@ const ReInvestPage = () => {
     reinvestment: "Reinvestment Supported",
   },
   {
-    id: "standard",
-    title:"Standard Plan",
-    roi: 25,
-    min: 500,
-    max: 999 ,
-    duration: 48 ,
+    id: "corporate",
+    title:"Corporate Plan",
+    roi: 50,
+    min: 100000,
+    max:9999999999,
+    duration: 720,
     reinvestment: "Reinvestment Supported",
   },
   // {
@@ -103,15 +112,6 @@ const ReInvestPage = () => {
   //   duration: "1 Year Plan",
   //   reinvestment: "Reinvestment Supported",
   // },
-  {
-    id: "corporate",
-    title:"Corporate Plan",
-    roi: 50,
-    min: 100000,
-    max:9999999999,
-    duration: 720,
-    reinvestment: "Reinvestment Supported",
-  },
   ]
   
   useEffect(()=>{

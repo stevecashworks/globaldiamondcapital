@@ -12,6 +12,14 @@ const plansData = [
     reinvestment: "Reinvestment Supported",
   },
   {
+    title: "Standard Plan",
+    roi: "25% ROI",
+    minDeposit: "500 USD",
+    maxDeposit: "999 USD",
+    duration: "48 Hours Plan",
+    reinvestment: "Reinvestment Supported",
+  },
+  {
     title: "Premium Plan",
     roi: "25% ROI",
     minDeposit: "1000 USD",
@@ -24,15 +32,7 @@ const plansData = [
     roi: "40% ROI",
     minDeposit: "40000 USD",
     maxDeposit: "99999 USD",
-    duration: "7 Days Plan",
-    reinvestment: "Reinvestment Supported",
-  },
-  {
-    title: "Standard Plan",
-    roi: "25% ROI",
-    minDeposit: "500 USD",
-    maxDeposit: "999 USD",
-    duration: "48 Hours Plan",
+    duration: "168 Hours Plan",
     reinvestment: "Reinvestment Supported",
   },
   // {
@@ -47,8 +47,8 @@ const plansData = [
     title: "Corporate Plan",
     roi: "50% ROI",
     minDeposit: "100000 USD",
-    maxDeposit: "Unlimited USD",
-    duration: "One Month",
+    maxDeposit: "9999999999 USD",
+    duration: "720 Hours Plan",
     reinvestment: "Reinvestment Supported",
   },
 ];

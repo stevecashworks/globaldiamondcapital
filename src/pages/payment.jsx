@@ -126,10 +126,10 @@ const PaymentsPage = () => {
   ]
 
   // Extract URL parameters
-  const min = 50
   const source = queryParams.get("source");
   const plan = queryParams.get("plan");
   const quantity=queryParams.get("quantity");
+  const minAmount = 20;
   
 
   // Minimum amount logic for source === 'contribution'
@@ -139,7 +139,6 @@ const PaymentsPage = () => {
 
 
 
-  const minAmount = source === "contribution" ? 50 : min;
   const token= localStorage.getItem("support_token")
   
   useEffect(()=>{
@@ -187,8 +186,8 @@ const PaymentsPage = () => {
 
 
     }
-    if(min&&(enteredAmount<min)){
-      inputErrors.push(`minimum amount for this service is $${min}`)
+    if(minAmount && enteredAmount < minAmount){
+      inputErrors.push(`minimum amount for this service is $${minAmount}`)
     }
     // if(!means){
     // inputErrors.push(`select means of payment`)
